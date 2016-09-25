@@ -16,7 +16,7 @@ _init = function()
  for i=1,8 do
   add(blobs,{})
  end
- music"0"
+ music"60"
 end,
 _draw = function()
  --cls
@@ -60,10 +60,10 @@ _draw = function()
   if b.z-z > 0 then
    if abs(p1[1]-p_x)+abs(p1[2]-p_y) < 1 then
     rectfill(0,0,127,127)
-    sfx"1"
+    sfx"61"
     l-=1
    else
-    sfx"0"  
+    sfx"60"  
    end
   end
  
