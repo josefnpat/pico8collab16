@@ -1,3 +1,21 @@
+draw_rotated_sprite = function(spr, spr_x, spr_y, spr_ang)
+  r=flr(spr_ang*20)/20
+  s,c=sin(r),cos(r)
+  b=s*s+c*c
+  for y=-6,5 do 
+    for x=-6,5 do
+      ox,oy=( s*y+c*x)/b, (-s*x+c*y)/b
+      colr=sget(spr%16*8+ox+4,flr(spr/16)*8+oy+4)
+      ax,ay=ox+4,oy+4
+
+      if ax>=0 and ax<8 and ay>=0 and ay<8 and colr>0 then 
+        pset(spr_x+4+x,spr_y+4+y,colr)
+        color(7)
+      end
+    end
+  end
+end
+
 add(games, {
  name = "bmx air king",
  author = "dollarone",
