@@ -1,7 +1,6 @@
-add(games,{
-		name="videopirate",
-		author="team_disposable",
-		_update = function()
+add(games,{name="videopirate",author="team_disposable",
+
+_update = function()
 			cls()
 
 	if(gameover == false) then
@@ -10,20 +9,20 @@ add(games,{
 			
 			if(clipqueue[1] != null) then
 				
-			sprite1,sprite2,val1,val2,val3,val4,nextclip = {5,5,32,40,rnd(4),(flr(rnd(6.9))+1) * 8},{6,6,60,40,rnd(4),(flr(rnd(6.9))+1) * 8},0,0,0,0,clipqueue[#clipqueue]
+			sprite1,sprite2,nextclip = {5,5,32,40,rnd(4),rnd(6.9) * 8},{6,6,60,40,rnd(4),rnd(6.9) * 8},clipqueue[#clipqueue]
 			
 			del(clipqueue,nextclip)
 			cliptimer += nextclip[2]
 			
-				if(nextclip[1] == 0) val1,val2,val3,val4 = 32,64,40,72
+				sprite1[1],val2,sprite2[1],val4 = 32,64,40,64
 				
-				if(nextclip[1] == 1) val1,val2,val3,val4 = 32,64,40,64
+				if(nextclip[1] == 1) val2,val4 = 64,72
 
-				if(nextclip[1] == 2) val1,val2,val3,val4 = 32,72,40,80
+				if(nextclip[1] == 2) val2,val4 = 72,80
 
-				if(nextclip[1] == 3) val1,val2,val3,val4 = 32,80,40,64
+				if(nextclip[1] == 3) val2 = 80
 
-				sprite1[1],sprite1[2], sprite2[1],sprite2[2] = val1,val2,val3,val4
+				sprite1[2],sprite2[2] = val2,val4
 			else
 
 				gameover = true
@@ -46,7 +45,7 @@ add(games,{
 
 		--update obstructions
 	obs = nextclip[3]
-	if(#obs == 0) success += 1  cliptimer = 0 
+	if(#obs == 0) success += 1  cliptimer = 0 sfx(0) 
 	for o in all(obs) do
 	
 		--{typeofobstruction,directionofobstruction,burstfreq,burstduration,burst_delaystart})
@@ -62,7 +61,7 @@ add(games,{
 			for i=1,o[3],1 do
 				for j=1,40,1 do
 					
-					pset(rnd(90)+19,rnd(80)+19,3)
+					pset(rnd(90)+19,rnd(80)+19,o[2])
 					
 					
 				end
@@ -71,7 +70,14 @@ add(games,{
 			
 			
 		
+		elseif (o[1] < 2) then
+		
+			if(btnp(5)) o[3] -= 1
+			sspr(32,88,8,8,40,50,40,40)
+			--spr(180,50,50)
+		
 		else
+		
 	
 		--lines
 		if(btnp(4)) o[3] -= 1
@@ -83,9 +89,8 @@ add(games,{
 		end
 		
 		
-		
 		end
-		if(o[3] <= 0) del(obs,o)
+		if(o[3] <= 0.1) del(obs,o) sfx(1)
 	
 	end
 		
@@ -98,41 +103,54 @@ add(games,{
 
 		cliptimer -=1
 
-		print(cliptimer,100,10,15)
+		print(cliptimer,85,20,15)
+		
+	
 
 	else
 	
-		print("you pirated "..success.." out of "..total.." tapes",5,50,15)
+		print("your collection is superb.",5,40,15)
+		print("vhs will never die, you gloat",5,50,15)
 	
 	end
 
+	xval = 40
+	yval = 100
+	for i=1,success,1 do
+	
+		sspr(48,64,16,8,xval,yval,48,24)
+		yval -=4
+		xval -=4
+	
+	end
+	
+	
 
-		end,
+end,
 		
-	_init = function(self)
+_init = function(self)
 			
 		clipqueue,cliptimer,gameover,success = {},0,false,0
 
 		nextclip = null
-		--difficulty = 10
+		
 		sprite1= null
 		sprite2 = null
 
 
 			--populate queue
-			for difficulty = 10,0,-1 do
+			for difficulty = 10,1,-1 do
 				
 				obstructions = {}
 				for i=1,difficulty,1 do
 
-					add(obstructions,{rnd(1.9),flr(rnd(3.9)),difficulty})
+					add(obstructions,{rnd(2.9),flr(rnd(3.9)),difficulty})
 
 				end
-				add(clipqueue,{flr(rnd(3.9)),difficulty * 50,obstructions})
+				add(clipqueue,{flr(rnd(3.9)),150,obstructions})
 
 			end
 
-			total = #clipqueue
+	
 
-		end
-}) -- game 15
+	end})
