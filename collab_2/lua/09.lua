@@ -1,13 +1,8 @@
 add(games,{
-	name="zzzzap!",
-	author="scathe",
+ name="zzzzap!",
+ author="scathe",
  _init=function()
-  t,a,b,et,ex,score,ea,ew,level,speed,timer,thresh=0,0,0,0,0,0,false,false,1,120,210,5
-  hiscore=dget"0"
-  rndxy=function()
-   return flr(rnd(6)+1)*16+1,flr(rnd(6)+1)*16+1
-  end
-  rndl=function(m) return m+flr(rnd(4)+1) end
+  t,a,b,et,ex,score,ea,ew,level,speed,timer,thresh,hiscore,rndxy,rndl=0,0,0,0,0,0,false,false,1,120,210,5,dget"0",function() return flr(rnd(6)+1)*16+1,flr(rnd(6)+1)*16+1 end,function(m) return m+flr(rnd(4)+1) end
   playerx,playery=rndxy()
   goalx,goaly=rndxy()
  end,
@@ -15,7 +10,7 @@ add(games,{
  _draw=function(self)
   cls()
   if not gameover then
-   s2=speed/2
+   s2,i=speed/2
    timer-=1
    if(timer<=0) sfx"35" gameover=true
    rectfill(0,115,timer,117,8)
@@ -61,26 +56,26 @@ add(games,{
    end
 
    if ew then
-    a+=1
-    b+=1
+    a+=1 b+=1
     spr(rndl(211),ex,9) spr(rndl(211),ex+8,9)
     if(b>=s2) sfx"34" b=0
     if a>s2 then
      for i=1,6 do
-      spr(228,ex,i*16)
-      spr(229,ex+8,i*16)
-      spr(230,ex,i*16+8)
-      spr(231,ex+8,i*16+8)
+      d=i*16
+      spr(228,ex,d)
+      spr(229,ex+8,d)
+      spr(230,ex,d+8)
+      spr(231,ex+8,d+8)
      end
-     if(playerx==ex) sfx "35" gameover=true
+     if(playerx==ex) sfx"35" gameover=true
     end
     if(a>=s2+15) ew=false a=0
    end
   else
-   print("           game over!\n\n        press \x97 to retry",0,50,7)
+   print"\n\n\n\n\n\n\n\n           game over!\n\n        press \x97 to retry"
    if(btnp"5") gameover=false self._init()
   end
 
-  print("score " .. score .. "       hi " .. hiscore .. "     level " .. level,0,122,9)
+  print("score " .. score .. "       hi " .. hiscore .. "     level " .. level,0,122)
  end
 }) -- game 9
