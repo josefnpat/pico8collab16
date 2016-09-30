@@ -4,7 +4,7 @@ __lua__
 --collab16 cart n, date
 --1 cart 16 devs so little space!
 
-cartdata"pico8collab16"
+cartdata"pico8collab162"
 function _draw() if cgame._draw then cgame:_draw() end end
 function _update() if cgame._update then cgame:_update() end end
 
