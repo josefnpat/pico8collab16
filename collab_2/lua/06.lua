@@ -29,7 +29,7 @@ add(games, {
     return 32,32,17,17
    end
    --elseif i==4 then --ramps
-    return 49,32,16,18
+    return 49,32,15,17
    --end
 
   end,
