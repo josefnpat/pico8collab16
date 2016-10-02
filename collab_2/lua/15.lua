@@ -1,7 +1,8 @@
 add(games,{name="videopirate",author="team_disposable",
 
 _update = function()
-			cls()
+	
+	cls()
 
 	if notgameover then
 
@@ -13,13 +14,12 @@ _update = function()
 			size1,size2,rand = rnd"6.9"*8,rnd"6.9"*8,rnd"3.9"
 			
 			obs = {}
-				for i=success,-1,-1 do
+			
+			for i=1,success,1 do
 
-					add(obs,{rnd"4.5",flr(rnd"4"),11})
+				add(obs,{i,flr(rnd"4"),11})
 
-				end
-				
-		
+			end
 				
 			cliptimer += 100
 			
@@ -35,106 +35,116 @@ _update = function()
 
 		--draw the clip
 
-	adjust,adjust2 = rnd"8",rnd"8"
+		adjust,adjust2 = rnd"8",rnd"8"
 	
-	
-	sspr(sprite1x,sprite1y,8,8,32+adjust,40+adjust2,size1,size1)
-		--sx sy sw sh dx dy [dw dh] [flip_x] [flip_y]
-	sspr(sprite2x,sprite2y,8,8,60+adjust2,40+adjust,size2,size2)
+		sspr(sprite1x,sprite1y,8,8,32+adjust,40+adjust2,size1,size1)
 		
-
+		sspr(sprite2x,sprite2y,8,8,60+adjust2,40+adjust,size2,size2)
+		
 		--update obstructions
-	--obs = nextclip[3]
-	if(#obs == 0) success += 1  cliptimer = 0 
-	for o in all(obs) do
-		
-		if o[1] < 0.5 then 
-			
-				--copyright symbol
-				copyrightnotshowing = false
-				if (btnp"5" and btnp"4") o[3] = 0  copyrightnotshowing=true
-				sspr(32,88,8,8,40,50,40,40)
-				--spr(180,50,50)
-			
-		end
-		
-		if copyrightnotshowing then 
-			if o[1] < 1.5 then
+	
+		if #obs == 0 then 
+			success += 1  cliptimer = 0 
+	
+		else
+	
+		o = obs[1]
+		o1,o2,o3 = o[1],o[2],o[3]
+		if o1 == 1 then 
 				
-					if(btnp"4") o[3] -= 1
-					liney = rnd"40"+29
-					for i = 19,109,5 do
-
-						line(i,liney,i+o[3],liney+o[3],14)
-
-					end
-			
-			
-			elseif o[1] < 3.5 then
-				--static
 				
-					--controls to fix
-					if(btn"o[2]") o[3] -= 0.5  
+			if (btnp"5" and btnp"4") o3 = 0  
 					
-					 
-					for i=1,o[3],1 do
-						for j=1,20,1 do
-							
-							pset(rnd"90"+19,rnd"80"+19,o[2]+1)
-							
-							
-						end
-									
-					end
-				
+			sspr(32,88,8,8,40,50,40,40)
 					
-			elseif o[1] < 4.5 then
-				
-				bumpat -= 2
-				if(bumpat < 19) bumpat = 109
-				
-				bmpcolour = 9
-				if bumpat < 74 and bumpat > 54 then
-					bmpcolour = 11
-					if btnp"5" then o[3] = 0 end
-				
-				end
-				
-				for b = 40+adjust,80,5 do
-					line(19,b,bumpat,b,bmpcolour)
-					line(bumpat+8,b,109,b)
-					spr(181,bumpat,b-8)
-				end
-				
+			
+		elseif o1 == 2 then
+					
+			if(btnp"4") o3 -= 2
+			liney = rnd"40"+29
+			for i = 19,109,5 do
+
+				line(i,liney,i+o3,liney+o3,14)
+
 			end
+						
+				
+		elseif o1  < 11 then
+						
+			if btn(o2) then o3 -= 2 end
+						
+						
+			spritex,flipped = 48,false
+					
+					
+			if o2 == 1 then flipped = true   
+						
+			elseif o2 == 2 then spritex = 56  
+						
+			elseif o2 == 3 then spritex = 56 flipped = true end
+						
+			sspr(spritex,72,8,8,50,50,24,24,flipped,flipped)
+						 
+			for i=1,o3,1 do
+				for j=1,20,1 do
+								
+					pset(rnd"90"+19,rnd"80"+19,o2+1)
+								
+								
+				end
+										
+			end
+					
+		else
+				
+			bumpat -= 4
+			if bumpat < 19 then bumpat = 109 end
+						
+			bmpcolour = 9
+						
+			if bumpat < 74 and bumpat > 54 then
+				bmpcolour = 11
+				if btnp"5" then o3,bumpat= 0,15   end
+						
+			end
+						
+			for b = 40+adjust,80,5 do
+				line(19,b,bumpat,b,bmpcolour)
+				line(bumpat+8,b,109,b)
+				spr(181,bumpat,b-8)
+			end
+					
+					
 		end
-		if(o[3] <= 0.1) del(obs,o) cliptimer += 20
-	
-	end
-	
-	--draw the tv
-
-	sspr(48,80,16,16,4,4,120,120)	
+			
+		o[3] = o3
+		if(o3 <= 0.1) del(obs,o) cliptimer += 35
 		
 		cliptimer -=1
-		print(cliptimer,85,20,15)
-			
-
-	else
+		--cursor(20,28)
+		print(cliptimer,85,20)
 		
-		xval,yval,printline = 80,100,"better luck next time."
-		for i=1,success,1 do
-		printline = "your collection is superb. \nvhs will never die, you gloat"
-			sspr(48,64,16,8,xval,yval,48,24)
-			yval -=4
-			xval -=4
+	end	
 	
+	
+		
+else
+		cursor(20,28)
+		
+		if success == 15 then 
+			print"your collection\nis superb. \nvhs will never die,\nyou gloat\n\n\n\n\npress z to restart" 
+		
+		else
+			print"no one said piracy\nwas easy.\n\nz+x to break copyright\narrows reduce static\nz to remove scanlines\nx in time to lock on\n\npress z to restart"
+		
 		end
-		print(printline,5,20,15)
+		--print(printline,20,28)
 		
-	
-	end
-
+		if(btnp"4") cgame:_init()
+end
+	--draw tv
+	sspr(48,80,16,16,4,4,120,120)
+	--draw tape
 	spr(134,30,110,2,1)
 	print(success,50,110)
 	
@@ -143,6 +153,7 @@ end,
 		
 _init = function(self)
 			
-		notgameover,cliptimer,success,bumpat,copyrightnotshowing,obs = true,0,0,0,true,{}
+		notgameover,cliptimer,success,bumpat,obs = true,0,0,0,{}
 		music"0"
+		
 	end})
