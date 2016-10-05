@@ -45,7 +45,7 @@ _draw = function(self)
     print(score, 10, 104)
     spr(43,death_x,death_y)
   else
-    print("alternate ‹ and ‘ to speed up.\n in the air press ‹ and ‘ to\n spin and — ƒ ” for tricks!\n     press Ž to try again", 1, 100)
+    print("alternate \x8b and \x91 to speed up.\n in the air press \x8b and \x91 to\n spin and \x83 \x94 \x97 for tricks!\n     press \x8e to try again", 1, 100)
   end
   draw_rotated_sprite(player_sprite,player_x,player_y,player_angle)
 end,
