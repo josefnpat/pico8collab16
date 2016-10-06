@@ -21,8 +21,12 @@ end
 add(games, {
  name = "bmx air king",
  author = "dollarone",
-
- _init = function(self)
+  
+_init = function(self)
+  music"28"
+  self:startgame()
+end,
+startgame = function() 
   timer,
   player_x,
   player_y,
@@ -34,10 +38,9 @@ add(games, {
   death_x,
   flips,
   score = 0,0,23,8,0,1,0.2,0,0,-1,0
-  music"28" -- music yet to be added
 end,
 
-_draw = function(self)
+_draw = function()
   cls()
   map(0, 16, 0, 24, 16, 32)
 
@@ -53,7 +56,7 @@ end,
 _update = function(self)
   timer+=player_speed
   if btn"4" then 
-    self:_init()
+    self:startgame()
   end
 
   if flr(timer)%3==0 then
@@ -103,7 +106,7 @@ _update = function(self)
     --sfx"0" -- using someone else's sfx, woo. edit: ehh too much
   end 
 
-  if player_y > 71 then
+  if player_y>71 then
     player_y,
     flips = 71,-1
     if (player_angle+0.1)%1 < 0.23 then
@@ -113,12 +116,12 @@ _update = function(self)
       death_y,
       player_angle,
       force = 999,8,2,0,"\nhighscore remains: " .. dget(29)
-      if score > dget(29) then
+      if score>dget"29" then
         dset(29, score)
         force = "\n     new highscore!"
         sfx"17" -- using someone else's sfx, woo
-      else
-        sfx"12" -- using someone else's sfx, woo
+     -- else
+       -- sfx"12" -- using someone else's sfx, woo
       end     
       score = " nice jump! score: " .. score .. force
     else
@@ -127,7 +130,7 @@ _update = function(self)
       player_sprite,
       player_angle,
       score = player_x + 2,player_y,10,0,"    ouch ouch ouch..."
-      sfx"16" -- using someone else's sfx, woo
+      sfx"2" -- using someone else's sfx, woo
     end
   end  
 end
