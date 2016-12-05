@@ -23,10 +23,8 @@ menu = {
     color"7"
     rect(rx-1,ry-1,rx+18,ry+18)
     local cur = games[self.sel+1]
-    --spr(104,32,8,8,2)
-    color"8"
-    cursor(33,24)
-    print"pico8-collab16-2"
+    spr(200,32,8,4,2)
+    spr(232,64,8,4,2)
     color"7"
     cursor(32,97)
     print("game: "..cur.name.."\nauthor: "..cur.author)
