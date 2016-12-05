@@ -9,6 +9,7 @@ echo "git,git_count = \"$GIT\",\"$GIT_COUNT\"" >> ${OUTPUT}
 
 for file in $TARGET/lua/* ; do
   cat $file >> ${OUTPUT}
+  printf "\n" >> ${OUTPUT}
 done
 
 echo "__gfx__" >> ${OUTPUT}
