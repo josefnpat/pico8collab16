@@ -1,7 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 8
 __lua__
---collab16 cart n, date
+--collab16 cart 2 v%%git_count%%
 --1 cart 16 devs so little space!
 
 cartdata"pico8collab162"

@@ -3,14 +3,29 @@ TARGET=${1?missing target argument}
 GIT=`git log --pretty=format:'%h' -n 1 $TARGET`
 GIT_COUNT=`git log --pretty=format:'' $TARGET | wc -l`
 OUTPUT=$TARGET-v${GIT_COUNT}.p8
+RAW=/tmp/p8c16.tmp
 
 cat $TARGET/header.lua > ${OUTPUT}
+#Add git_count
+sed -i -e "s/%%git_count%%/${GIT_COUNT}/g" ${OUTPUT}
+#add git info
 echo "git,git_count = \"$GIT\",\"$GIT_COUNT\"" >> ${OUTPUT}
 
+rm -f ${RAW}
+#add and process code
 for file in $TARGET/lua/* ; do
-  cat $file >> ${OUTPUT}
-  printf "\n" >> ${OUTPUT}
+  cat $file >> ${RAW}
+  printf "\n" >> ${RAW}
 done
+
+#Remove leading and trailing whitespace
+sed -i 's/^[ \t]*//;s/[ \t]*$//' ${RAW}
+#Remove all comments
+sed -i 's:--.*$::g' ${RAW}
+#Delete empty lines
+sed -i '/^$/d' ${RAW}
+
+cat ${RAW} >> ${OUTPUT}
 
 echo "__gfx__" >> ${OUTPUT}
 for file in $TARGET/gfx/gfx* ; do
