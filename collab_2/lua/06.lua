@@ -20,9 +20,9 @@ add(games, {
   function(i)--getspritecoords
    
    if i==101 or i==102 then --player
-    return 46,49,5,17
+    return 46,49,5,15
    elseif i>102 then --player 
-    return 51,49,5,17
+    return 51,49,5,15
    elseif i==5 then         --floor
     return 32,49,14,9
    elseif i<4 then --cube
@@ -47,6 +47,7 @@ add(games, {
 
    if n > 100 then
     finalx += 5 
+    finaly -= 2
     if playerh then finaly -= 10 end
    end --correct player coords
 
@@ -64,7 +65,7 @@ add(games, {
 
    --doorway to exit
    if n==3 then 
-    sspr(56,49,8,17,finalx+8,finaly-12)
+    sspr(56,49,8,15,finalx+8,finaly-12)
    end 
   end,
 
