@@ -107,7 +107,7 @@ add(games,{
 
   if s_done then
     if btn"4" or btn"5" then self:_init() end
-    print("— to restart", 37, 122, 8)
+    print("\x97 to restart", 37, 122, 8)
   end
 
   sspr(0,0,64,64,0,0,128,128)
