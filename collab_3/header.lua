@@ -26,11 +26,12 @@ state_welcome = {
   _draw = function()
     cls()
     color"10"
-    print("collab16 cart 3")
+    print("\n\n\ncollab16 cart 3")
     print("speedrun")
     color"9"
     print("time to beat: "..speedrun_record)
     color"7"
+    speedrun_art()
   end,
   _update = function()
     srand(speedrun_srand)
@@ -53,7 +54,8 @@ state_getready = {
   end,
   _draw = function()
     cls()
-    print("current time: "..speedrun_current)
+    spr(games_rand[speedrun_game],128-8,0)
+    print("\n\n\ncurrent time: "..speedrun_current)
     print("game "..speedrun_game.." of "..#games)
     print("get ready!")
     print(games_rand[speedrun_game].author.." wants you to play")
@@ -61,6 +63,7 @@ state_getready = {
     print("par: "..games_rand[speedrun_game].par)
     print("record: "..games_rand[speedrun_game]._record)
     print(stringrep("*",flr(speedrun_getready/3*16)))
+    speedrun_art()
   end
 }
 
@@ -120,6 +123,11 @@ state_results = {
     color"6"
   end
 }
+
+speedrun_art=function()
+  sspr(0,0,32,16,0+32,0)
+  sspr(0,16,32,16,32+32,0)
+end
 
 btnp45=function()
  return btnp"4" or btnp"5"
