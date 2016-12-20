@@ -44,10 +44,10 @@ state_welcome = {
 
 state_getready = {
   _init = function()
-    speedrun_getready = 3
+    speedrun_getready = 90
   end,
   _update = function()
-    speedrun_getready -= 1/30
+    speedrun_getready -= 1
     if speedrun_getready <= 0 then
       switch_state(state_game)
     end
@@ -62,7 +62,7 @@ state_getready = {
     print(games_rand[speedrun_game].name)
     print("par: "..games_rand[speedrun_game].par)
     print("record: "..games_rand[speedrun_game]._record)
-    print(stringrep("*",flr(speedrun_getready/3*16)))
+    print(stringrep("*",flr(speedrun_getready/6)))
     speedrun_art()
   end
 }
