@@ -9,7 +9,7 @@ cartdata"pico8collab163"
 state_welcome = {
   _init = function()
     speedrun_srand = 1
-    speedrun_game = 1
+    speedrun_game_count = 0
     speedrun_record = dget(0) == 0 and 9999 or dget(0)
     speedrun_current = 0
     games_rand = {}
@@ -36,7 +36,7 @@ state_welcome = {
     srand(speedrun_srand)
     speedrun_srand += 1
     if btnp45() then
-      switch_state(state_getready)
+      nextgame()
     end
   end
 }
@@ -53,14 +53,14 @@ state_getready = {
   end,
   _draw = function()
     cls()
-    spr(games_rand[speedrun_game],128-8,0)
+    spr(speedrun_game_count,128-8,0)
     print("\n\n\ncurrent time: "..speedrun_current..
-    "\ngame "..speedrun_game.." of "..#games..
+    "\ngame "..speedrun_game_count.." of "..#games..
     "\nget ready!\n"..
-    games_rand[speedrun_game].author.." wants you to play\n"..
-    games_rand[speedrun_game].name..
-    "\npar: "..games_rand[speedrun_game].par..
-    "\nrecord: "..games_rand[speedrun_game]._record)
+    speedrun_game.author.." wants you to play\n"..
+    speedrun_game.name..
+    "\npar: "..speedrun_game.par..
+    "\nrecord: "..speedrun_game._record)
     print(stringrep("*",flr(speedrun_getready/6)))
     speedrun_art()
   end
@@ -71,11 +71,11 @@ state_game = {
     cls()
   end,
   _update = function()
-    games_rand[speedrun_game]._current += 1/30
-    games_rand[speedrun_game]:_update()
+    speedrun_game._current += 1/30
+    speedrun_game:_update()
   end,
   _draw = function()
-    games_rand[speedrun_game]:_draw()
+    speedrun_game:_draw()
   end
 }
 
@@ -141,9 +141,10 @@ stringrep = function(char,n)
 end
 
 nextgame=function()
-  speedrun_current += games_rand[speedrun_game]._current
-  speedrun_game += 1
-  if games_rand[speedrun_game] then
+  if(speedrun_game) speedrun_current += speedrun_game._current
+  speedrun_game_count += 1
+  speedrun_game=games_rand[speedrun_game_count]
+  if speedrun_game then
     switch_state(state_getready)
   else
     switch_state(state_results)
