@@ -12,25 +12,21 @@ state_welcome = {
     speedrun_game_count = 0
     speedrun_record = dget(0) == 0 and 9999 or dget(0)
     speedrun_current = 0
-    games_rand = {}
+    speedrun_games={}
     for i,game in pairs(games) do
       game._record = dget(i) == 0 and 9999 or dget(i)
       game._current = 0
-      add(games_rand,game)
-    end
-    for i,game in pairs(games_rand) do
-      local swap = flr(rnd()*(#games_rand))+1
-      games_rand[i],games_rand[swap] = games_rand[swap],games_rand[i]
+      add(speedrun_games,game)
     end
   end,
   _draw = function()
     cls()
+    speedrun_art()
     color"10"
-    print("\n\n\ncollab16 cart 3\nspeedrun")
+    print("\n\n\n\n\n\ncollab16 cart 3\nspeedrun")
     color"9"
     print("time to beat: "..speedrun_record)
     color"7"
-    speedrun_art()
   end,
   _update = function()
     srand(speedrun_srand)
@@ -53,16 +49,18 @@ state_getready = {
   end,
   _draw = function()
     cls()
-    spr(speedrun_game_count,128-8,0)
-    print("\n\n\ncurrent time: "..speedrun_current..
-    "\ngame "..speedrun_game_count.." of "..#games..
-    "\nget ready!\n"..
-    speedrun_game.author.." wants you to play\n"..
-    speedrun_game.name..
-    "\npar: "..speedrun_game.par..
+    speedrun_art()
+    
+    -- game iconspeedrun_game.icon
+    spr(16*flr(speedrun_game.icon/8+2)+speedrun_game.icon%8,0,64)
+    
+    print("\n\n\n\n\n\ncurrent time: "..speedrun_current..
+    "\ngame "..speedrun_game_count.." of 16\nget ready!\n"..
+    speedrun_game.author.." wants you to play:\n\n"..
+    "   "..speedrun_game.name..
+    "\n\npar: "..speedrun_game.par..
     "\nrecord: "..speedrun_game._record)
     print(stringrep("*",flr(speedrun_getready/6)))
-    speedrun_art()
   end
 }
 
@@ -124,8 +122,7 @@ state_results = {
 }
 
 speedrun_art=function()
-  sspr(0,0,32,16,0+32,0)
-  sspr(0,16,32,16,32+32,0)
+  sspr(0,0,64,32,32,0)
 end
 
 btnp45=function()
@@ -142,8 +139,11 @@ end
 
 nextgame=function()
   if(speedrun_game) speedrun_current += speedrun_game._current
+  
+  speedrun_game = speedrun_games[flr(rnd(#speedrun_games))+1]
+  del(speedrun_games, speedrun_game)
   speedrun_game_count += 1
-  speedrun_game=games_rand[speedrun_game_count]
+  
   if speedrun_game then
     switch_state(state_getready)
   else
