@@ -1,10 +1,10 @@
 pico-8 cartridge // http://www.pico-8.com
 version 8
 __lua__
---collab16 cart n, date
+--collab16 cart 2 v%%git_count%%
 --1 cart 16 devs so little space!
 
-cartdata"pico8collab16"
+cartdata"pico8collab162"
 function _draw() if cgame._draw then cgame:_draw() end end
 function _update() if cgame._update then cgame:_update() end end
 
@@ -23,10 +23,8 @@ menu = {
     color"7"
     rect(rx-1,ry-1,rx+18,ry+18)
     local cur = games[self.sel+1]
-    --spr(104,32,8,8,2)
-    color"8"
-    cursor(33,24)
-    print"pico8-collab16-2"
+    spr(200,32,8,4,2)
+    spr(232,64,8,4,2)
     color"7"
     cursor(32,97)
     print("game: "..cur.name.."\nauthor: "..cur.author)
@@ -50,22 +48,22 @@ cgame = menu
 cameralib = {
   new = function(init)
     init = init or {}
-    local self = {}
-    self.z = init.z or -3
-    self.focallength = init.focallength or 5
-    self.fov = init.fov or 45
-    self.theta = init.theta or 0
-    self.width = init.width or 128
-    self.height = init.height or 128
-    -- public
-    self.line = cameralib.line
-    self.point = cameralib.point
-    -- private
-    self._perspective = cameralib._perspective
-    self._tan = cameralib._tan
-    self._coordstopx = cameralib._coordstopx
-    self._map = cameralib._map
-    return self
+    return {
+      z = init.z or -3,
+      focallength = init.focallength or 5,
+      fov = init.fov or 45,
+      theta = init.theta or 0,
+      width = init.width or 128,
+      height = init.height or 128,
+      -- public
+      line = cameralib.line,
+      point = cameralib.point,
+      -- private
+      _perspective = cameralib._perspective,
+      _tan = cameralib._tan,
+      _coordstopx = cameralib._coordstopx,
+      _map = cameralib._map
+    }
   end,
   line = function(self, p1, p2)
     local px_1 = self:_coordstopx(self:_perspective(p1))

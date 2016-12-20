@@ -1,0 +1,27 @@
+12a13,17
+> body {
+> 	padding: 0px;
+> 	margin: 0px;
+> }
+> 
+17c22
+<   	margin: 1px;
+---
+> 	margin: 1px;
+55c60
+< <body bgcolor=#303030>
+---
+> <body bgcolor=#000000>
+57,59c62
+< 	<br><br><br>
+< 
+< 	<center><div style="width:512px;">
+---
+> 	<div style="width:512px;">
+134,137c137
+< 	<br>	
+< 
+< 	</div></center>
+< 	<br><br>
+---
+> 	</div>
