@@ -26,8 +26,7 @@ state_welcome = {
   _draw = function()
     cls()
     color"10"
-    print("\n\n\ncollab16 cart 3")
-    print("speedrun")
+    print("\n\n\ncollab16 cart 3\nspeedrun")
     color"9"
     print("time to beat: "..speedrun_record)
     color"7"
@@ -55,13 +54,13 @@ state_getready = {
   _draw = function()
     cls()
     spr(games_rand[speedrun_game],128-8,0)
-    print("\n\n\ncurrent time: "..speedrun_current)
-    print("game "..speedrun_game.." of "..#games)
-    print("get ready!")
-    print(games_rand[speedrun_game].author.." wants you to play")
-    print(games_rand[speedrun_game].name)
-    print("par: "..games_rand[speedrun_game].par)
-    print("record: "..games_rand[speedrun_game]._record)
+    print("\n\n\ncurrent time: "..speedrun_current..
+    "\ngame "..speedrun_game.." of "..#games..
+    "\nget ready!\n"..
+    games_rand[speedrun_game].author.." wants you to play\n"..
+    games_rand[speedrun_game].name..
+    "\npar: "..games_rand[speedrun_game].par..
+    "\nrecord: "..games_rand[speedrun_game]._record)
     print(stringrep("*",flr(speedrun_getready/6)))
     speedrun_art()
   end
@@ -118,8 +117,8 @@ state_results = {
     else
       color"8"
     end
-    print("\nyour time: "..speedrun_current)
-    print("record: "..speedrun_record)
+    print("\nyour time: "..speedrun_current..
+    "\nrecord: "..speedrun_record)
     color"6"
   end
 }
