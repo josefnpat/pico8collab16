@@ -50,10 +50,10 @@ state_getready = {
   _draw = function()
     cls()
     speedrun_art()
-    
+
     -- game iconspeedrun_game.icon
     spr(16*flr(speedrun_game.icon/8+2)+speedrun_game.icon%8,0,64)
-    
+
     print("\n\n\n\n\n\ncurrent time: "..speedrun_current..
     "\ngame "..speedrun_game_count.." of 16\nget ready!\n"..
     speedrun_game.author.." wants you to play:\n\n"..
@@ -139,11 +139,11 @@ end
 
 nextgame=function()
   if(speedrun_game) speedrun_current += speedrun_game._current
-  
+
   speedrun_game = speedrun_games[flr(rnd(#speedrun_games))+1]
   del(speedrun_games, speedrun_game)
   speedrun_game_count += 1
-  
+
   if speedrun_game then
     switch_state(state_getready)
   else
